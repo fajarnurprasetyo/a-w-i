@@ -27,7 +27,12 @@ export default async ({ query }, res) => {
   }
 
   const regencies = await prisma.regency.findMany({
-    where: { name: { contains: search } },
+    where: {
+      name: {
+        contains: search,
+        mode: 'insensitive',
+      }
+    },
     skip: !isNaN(skip) ? skip : 0,
     take: !isNaN(take) ? take : 20,
   });
